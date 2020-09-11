@@ -5,8 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GDocsApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainVM}">
     <Grid>
-        <Button Click="Button_Click">Load</Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <TreeView ItemsSource="{Binding Files}">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type local:DriveEntityVM}">
+                    <TextBlock Text="{Binding Name}"/>
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+
+        <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="5"/>
+
+        <Grid Grid.Column="2">
+            <Button Command="{Binding GetFilesCommand}" Content="Load" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </Grid>
     </Grid>
 </Window>
